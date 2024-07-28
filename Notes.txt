@@ -1,0 +1,130 @@
+it is Notes For React: 
+------: 
+If you create npx create react-app -> It will give you a production ready Code.
+can react itself make our code production ready ? 
+No: because there are lot of packeges behind the secene help to build production ready app
+------:
+why packege.json file ?  package.json is configuration for npm, it will take care like version etc...
+ "package" is also know is dependency
+most important package is bundler: there are many pacakges for bundling: eg: vite,parcel,web pack.....
+ -----------:
+ There are 2 types of dependency which our app can have: 
+ 1.dev dependency -> it is generally reaquired when we develop our app: 
+ 2.normal dependency-> it is for production
+ -------------:
+ "parcel": "^2.12.0"
+ "parcel": "~2.12.0"
+ in this line what is ^ symbol means ?  why we are using it : if there is any version will be released in future, it will automatically update this parcel version: (caret only update the minor version );
+ if the update is major version then it won't update automatically
+ if you want to update automatically even though the version is major we can use "parcel": "~2.12.0"
+ but if you update the major version automatically to our app , it may crash your app: 
+ ------------------------:
+package-lock.json is track the exact version of dependency: 
+
+Great question! When you install a dependency in a React project using npm, it indeed installs not only the dependency you specified but also a bunch of other dependencies in the node_modules folder. This is because of how dependencies and their own dependencies (often called "transitive dependencies") work. Let's break this down:
+
+---------------------: Every pacakges has own pacakge.json: 
+you have package.json and package-lock.json it will keep track all the dependencies.
+and also you don't need to push the  node_modules to git hub: because by using pacakge.json and pacakge-lock.json I can re-generate all teh dependencies again: thats why we don't need push the node_modules: 
+once you delete node modules: you can re install just by 
+
+giving command: *******npm install*********** 
+to install parcel: ******* npm install -D parcel **********
+----------------: what ever you can regenerate don't put it on git hub: 
+*********npx parcel index.html**************
+if you want to execute the pacakge you should use npx 
+------------cdn is not pereferred way to impor the react into project instead we can call  the react library from npm: 
+*********npm install react***** -> it is for regular dependency which means it is there for both production phase and development phase: 
+**********npm install react-dom****
+***npm install --save-dev react** 
+-------------------------------------------
+if don't give this attribute type = "module" 
+then parcel considerd as it is normal javascript file then it give error like "browser cannot have imports and exports" 
+, to convert that into module we have to use attribute like type = "module" 
+<script type="module" src="app.js"></script>
+
+========================= expected key does not exist error in parcel: 
+=======npm cache clean --force===========================
+
+-----------------HOW TO BUILD PRODUCTION READY APP:-------------------------------------------------------
+-- we have to remove main.js that we have already defined in "main":"main.js" pacakge.json
+because parcel
+--when you give simple npx parcel index.html -> it simply create the dev build and hosted on to the 123 port: all the files are stored inside the dist folder: 
+--but when you give npx parcel buil index.html it will build inside dist folder: 
+-----------------
+you don't need to put parcle-cache and dist folder into the git: 
+---parcel-cache catch the all teh updates and do hmr
+--and also you don't need to put dist folder into git becuase: 
+basically when you put the folder into git the server automatically run npm commands for our project: so we don't need to worry about it : 
+-------------------to make our app to work on older version we use babel  dependency: 
+-------------------Browserslist is a configuration tool that helps you specify the target browsers for your web applications.
+----------browser list is used to define our configuration, and then babel convert all that code into 
+older version code based on the configuration we defined: 
+------------------------SCRIPTS 
+we have to use scripts: because it is industry standard; 
+because we can create script for start our project or build our project; 
+we can configure our scripts:{}
+---------------------------------------------------------
+//react element: it is actually an object. but when we render to this dom it become dom element: 
+to render the element we have to create root()
+---------------------------
+javascript syntax and xml: jsx
+-------------react and jsx are different: 
+jsx is a html like syntax, it is not html in javascript: 
+
+we have already known , browser can understand only the javascript code 
+but if you take jsx, jsx file is not a valid javascript code . but parcel transpiling our javascript code into pure javascript
+--------------babel: it is a javascript compiler: it take our code and convert it into that browser can understand: 
+the jsx code is transpiled into reactelement,then that react element convert that into html element again: 
+===========================
+if you want to give attribute to the jsx element you have to give as camelCase eg: className;
+if you write jsx in mulitple line , you have to wrap into ()
+---------------------
+The error in your code is due to the way you are returning multiple elements from the HeadingComponent. In JSX, a component must return a single root element. However, in your HeadingComponent, you are returning two elements (<h1> and <TitleComponent />) without wrapping them in a single parent element.
+
+To fix this issue, you can wrap the elements in a React fragment or a parent element such as a <div>. Here's how you can do it:
+root.render() - > convert everything into html element: 
+what is component composition ? 
+put one component inside other component
+-----------------------
+and also you can use javascript code inside jsx using {}: 
+cross side scripting is type of attacks: 
+/**
+ * In React we have class Based Component and Function Based Component:
+ * class based component uses Java script clases
+ * Function based component use Javascript functions: it just a normal javascript function which return jsx: / react element:
+ * * In react everything you return should be the Single root element, you cannot return the multiple react element:
+ * * { title } -> if you put  any malicious code inside this curly braces , jsx automatically remove that code , because every time js engine check that expression we have written inside the curly braces: so we
+ * dont need to fear:
+ * we can also wirte component like this  <Title></Title>
+ *
+ */
+ ---------------if you want to give inline style to the jsx 
+ you have to give inside javascript object
+ ------------------------------------------
+ props  -> properties
+ passing props to component is like props are just arguments to a function : now this arguments is just javascript object: 
+ ----------------------CONFIG DRIVEN UI------------------------------------------------
+ how the ui should look based on the backend data : this data may be vary based on different location 
+ ---------error
+ each child should have unique key 
+ key={}
+ when the components are in the same level 
+ don't index as key : -> it caution if order are changed: 
+-------------------------use separate file for separate componenet: 
+first export then import the component: 
+--------------------------------------hard coded value: 
+don't put your hard-coded data into your react componenet file: 
+-------------there are two types of import and two types of export 
+1.default -> by default a file can export only one thing , if you want to mulitple thing you have to export named export 
+2.named export or named import
+-------------------------------you file should not have more than 100 line to looks clean 
+
+
+
+---------------HOOKS ALSO JUST NORMAL JAVASCRIPT FUNCTION BUT IT HAS SOME SUPERPOWERS: ------------
+2 important HOOKS
+react is only good at dom manipulation: 
+
+1.useState(); ->whenever the state changes , react render the component: 
+2.useEffect();
